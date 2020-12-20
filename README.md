@@ -33,4 +33,16 @@ Drawing our chart
 
 Diemensions we need to define: The wrapper and the bounds.
 In SVG instead of background, border we need to use fill and stroke.
-Drawing the axis :
+Drawing the axis.
+
+Steps in drawing Any Chart
+
+---
+
+- [x] Access Data
+- [x] Create chart dimensions
+- [x] Draw Canvas
+- [x] Create scales
+- [x] Draw data
+- [x] Draw peripherals (axes, lables, legends)
+- [x] Set up interactions
