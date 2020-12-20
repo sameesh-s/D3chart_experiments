@@ -46,7 +46,46 @@ async function drawLineChart(){
         .attr("x", 0)
         .attr("width", dimensions.boundedWidth)
         .attr("y", freezingTemperaturePlacement)
-        .attr("height", dimensions.boundedHeight - freezingTemperaturePlacement);
+        .attr("height", dimensions.boundedHeight - freezingTemperaturePlacement)
+        .attr("fill", "#e0f3f3");
+
+    const xScale = d3.scaleTime()
+        .domain(d3.extent(dataset, xAccessor))
+        .range([0, dimensions.boundedWidth]);
+
+    //Line drawing 
+    //M move x, y axis to that point.
+    //L drow line till that x, y axis
+    //z redrow to line to the starting point
+    //bounds.append("path").attr("d", "M 0 0 L 100 0 L 100 100 L 0 50 Z");
+    //d3.line() will generate the d string using the data points provided.
+    //inputs: how to find x axis value
+    //how to find y axis value
+    //give accessor functions with scale function 
+    const lineGenerator = d3.line()
+        .x(d => xScale(xAccessor(d)))
+        .y(d => yScale(yAccessor(d)));
+
+    const line = bounds.append("path")
+        .attr("d", lineGenerator(dataset))
+        .attr("fill", "none")
+        .attr("stroke", "#af9358")
+        .attr("stroke-width", 2);
+    
+    const yAxisGenerator = d3.axisLeft()
+        .scale(yScale)
+
+    const yAxis = bounds.append("g")
+        .call(yAxisGenerator);
+
+    const xAxisGenerator = d3.axisBottom()
+        .scale(xScale);
+    const xAxis = bounds.append("g")
+        .call(xAxisGenerator)
+        .style("transform", `translateY(${
+            dimensions.boundedHeight
+            }px)`);
+
 }
 
 drawLineChart()
